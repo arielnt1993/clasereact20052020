@@ -1,17 +1,34 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import SeasonDisplay from './SeasonDisplay';
+//revisando el uso de props pero en clases no funciones
+class App extends React.Component{
+  
+    state ={
+      lat:null,
+      errorMessage:''};
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+    
+    
+    componentDidMount(){
+      console.log('componentDid mount')
+      window.navigator.geolocation.getCurrentPosition(
+        position => {this.setState({lat: position.coords.latitude})},
+        e =>{this.setState({errorMessage:e.message});
+          }
+        );
+    }
+  render(){
+    console.log('render');
+    if (this.state.errorMessage !== ''){
+    return <div>Error: {this.state.errorMessage}</div>
+    }
+    if(this.state.lat !== null){
+    return <SeasonDisplay lat={this.state.lat}/>
+    }
+    return <div>loading....</div>
+  }
+}
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+ReactDOM.render(<App/>,document.getElementById('root'));
