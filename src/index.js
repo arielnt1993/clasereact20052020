@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import SeasonDisplay from './SeasonDisplay';
+import './'
 //revisando el uso de props pero en clases no funciones
 class App extends React.Component{
   
@@ -9,8 +10,6 @@ class App extends React.Component{
       lat:null,
       errorMessage:''};
 
-    
-    
     componentDidMount(){
       console.log('componentDid mount')
       window.navigator.geolocation.getCurrentPosition(
